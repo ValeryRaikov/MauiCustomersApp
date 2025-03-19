@@ -95,8 +95,18 @@ namespace CustomerApp
                 case "Delete":
                     try
                     {
-                        await _localDbService.Delete(customer);
-                        ListView.ItemsSource = await _localDbService.GetCustomers();
+                        var choice = await DisplayActionSheet("Are you sure you want to delete this record?", "Cancel", null, "Yes", "No");
+
+                        switch (choice)
+                        {
+                            case "Yes":
+                                await _localDbService.Delete(customer);
+                                ListView.ItemsSource = await _localDbService.GetCustomers();
+
+                                break;
+                            case "Delete":
+                                break;
+                        }
                     }
                     catch
                     {
